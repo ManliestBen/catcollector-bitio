@@ -27,12 +27,13 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'cat-collector-deployment-test-9384a51e3de4.herokuapp.com']
+CSRF_TRUSTED_ORIGINS = ['https://cat-collector-deployment-test-9384a51e3de4.herokuapp.com']
 
 # Application definition
 
 INSTALLED_APPS = [
+    'whitenoise.runserver_nostatic',
     'main_app',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -50,6 +51,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware'
 ]
 
 ROOT_URLCONF = 'catcollector.urls'
@@ -79,10 +81,11 @@ WSGI_APPLICATION = 'catcollector.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': env('BIT_IO_DATABASE_NAME'),
-        'USER': env('BIT_IO_USER'),
-        'PASSWORD': env('BIT_IO_PASSWORD'),
-        'HOST': 'db.bit.io',
+        'NAME': env('NEON_DATABASE_NAME'),
+        'USER': env('NEON_USER'),
+        'PASSWORD': env('NEON_PASSWORD'),
+        # 'HOST': 'db.utcsobhmalwyamizolic.supabase.co',
+        'HOST': 'ep-proud-river-31555243.us-east-2.aws.neon.tech',
         'PORT': '5432',
     }
 }
@@ -122,6 +125,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
+
+STATIC_ROOT = BASE_DIR / 'staticfiles' 
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 LOGIN_URL = 'home'
 

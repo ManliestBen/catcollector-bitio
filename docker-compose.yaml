@@ -1,8 +1,9 @@
 services:
   web:
     build: .
-    command: python manage.py runserver 0.0.0.0:3000
+    command: python manage.py runserver 0.0.0.0:5000
     volumes:
-      - .:/code
+      - ./webapp:/opt/webapp
     ports:
-      - "3000:3000"
+      - "5000:5000"
+    env_file: .env
